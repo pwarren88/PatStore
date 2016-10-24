@@ -1,0 +1,424 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PatStoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProdId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PaymentId" Type="int" Nullable="false" />
+          <Property Name="Total" Type="smallmoney" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreditCardNumber" Type="nvarchar" MaxLength="16" Nullable="false" />
+          <Property Name="CreditCardExpiration" Type="datetime" Nullable="false" />
+          <Property Name="CreditCardVerificationValue" Type="int" Nullable="false" />
+          <Property Name="CreditCardName" Type="nvarchar" MaxLength="22" Nullable="false" />
+          <Property Name="CreditCardAddress1" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreditCardAddress2" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreditCardCity" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreditCardState" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="CreditCardPostal" Type="nvarchar" MaxLength="11" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="RegionId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="Image_1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Image_2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Image_3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="WeatherLocaterId" Type="nvarchar" MaxLength="1000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RegionInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="RegionName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="ZipCode" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_id_payment">
+          <End Role="PaymentInfo" Type="Self.PaymentInfo" Multiplicity="1" />
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_prod">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_user">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payinfo_order">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="PaymentInfo" Type="Self.PaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_region_product">
+          <End Role="RegionInfo" Type="Self.RegionInfo" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegionInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PatStoreDBModelStoreContainer">
+          <EntitySet Name="OrderInfo" EntityType="Self.OrderInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentInfo" EntityType="Self.PaymentInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RegionInfo" EntityType="Self.RegionInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_id_payment" Association="Self.fk_id_payment">
+            <End Role="PaymentInfo" EntitySet="PaymentInfo" />
+            <End Role="OrderInfo" EntitySet="OrderInfo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_prod" Association="Self.fk_id_prod">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderInfo" EntitySet="OrderInfo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_user" Association="Self.fk_id_user">
+            <End Role="User" EntitySet="User" />
+            <End Role="OrderInfo" EntitySet="OrderInfo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payinfo_order" Association="Self.fk_payinfo_order">
+            <End Role="User" EntitySet="User" />
+            <End Role="PaymentInfo" EntitySet="PaymentInfo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_region_product" Association="Self.fk_region_product">
+            <End Role="RegionInfo" EntitySet="RegionInfo" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PatStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PatStoreDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderInfoes" EntityType="PatStoreDBModel.OrderInfo" />
+          <EntitySet Name="PaymentInfoes" EntityType="PatStoreDBModel.PaymentInfo" />
+          <EntitySet Name="Products" EntityType="PatStoreDBModel.Product" />
+          <EntitySet Name="RegionInfoes" EntityType="PatStoreDBModel.RegionInfo" />
+          <EntitySet Name="Users" EntityType="PatStoreDBModel.User" />
+          <AssociationSet Name="fk_id_payment" Association="PatStoreDBModel.fk_id_payment">
+            <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_prod" Association="PatStoreDBModel.fk_id_prod">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_user" Association="PatStoreDBModel.fk_id_user">
+            <End Role="User" EntitySet="Users" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_payinfo_order" Association="PatStoreDBModel.fk_payinfo_order">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_region_product" Association="PatStoreDBModel.fk_region_product">
+            <End Role="RegionInfo" EntitySet="RegionInfoes" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="PaymentInfo" Relationship="PatStoreDBModel.fk_id_payment" FromRole="OrderInfo" ToRole="PaymentInfo" />
+          <NavigationProperty Name="Product" Relationship="PatStoreDBModel.fk_id_prod" FromRole="OrderInfo" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_id_user" FromRole="OrderInfo" ToRole="User" />
+        </EntityType>
+        <EntityType Name="PaymentInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreditCardNumber" Type="String" Nullable="false" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardExpiration" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreditCardVerificationValue" Type="Int32" Nullable="false" />
+          <Property Name="CreditCardName" Type="String" Nullable="false" MaxLength="22" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardAddress1" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardAddress2" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardCity" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardState" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="CreditCardPostal" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_payment" FromRole="PaymentInfo" ToRole="OrderInfo" />
+          <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_payinfo_order" FromRole="PaymentInfo" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="RegionId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Image_1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Image_2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Image_3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="WeatherLocaterId" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_prod" FromRole="Product" ToRole="OrderInfo" />
+          <NavigationProperty Name="RegionInfo" Relationship="PatStoreDBModel.fk_region_product" FromRole="Product" ToRole="RegionInfo" />
+        </EntityType>
+        <EntityType Name="RegionInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="RegionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="PatStoreDBModel.fk_region_product" FromRole="RegionInfo" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_user" FromRole="User" ToRole="OrderInfo" />
+          <NavigationProperty Name="PaymentInfoes" Relationship="PatStoreDBModel.fk_payinfo_order" FromRole="User" ToRole="PaymentInfo" />
+        </EntityType>
+        <Association Name="fk_id_payment">
+          <End Type="PatStoreDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="1" />
+          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="PaymentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_prod">
+          <End Type="PatStoreDBModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_user">
+          <End Type="PatStoreDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_payinfo_order">
+          <End Type="PatStoreDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="PatStoreDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PaymentInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_region_product">
+          <End Type="PatStoreDBModel.RegionInfo" Role="RegionInfo" Multiplicity="1" />
+          <End Type="PatStoreDBModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RegionInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="RegionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PatStoreDBModelStoreContainer" CdmEntityContainer="PatStoreDBEntities">
+          <EntitySetMapping Name="OrderInfoes">
+            <EntityTypeMapping TypeName="PatStoreDBModel.OrderInfo">
+              <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentInfoes">
+            <EntityTypeMapping TypeName="PatStoreDBModel.PaymentInfo">
+              <MappingFragment StoreEntitySet="PaymentInfo">
+                <ScalarProperty Name="CreditCardPostal" ColumnName="CreditCardPostal" />
+                <ScalarProperty Name="CreditCardState" ColumnName="CreditCardState" />
+                <ScalarProperty Name="CreditCardCity" ColumnName="CreditCardCity" />
+                <ScalarProperty Name="CreditCardAddress2" ColumnName="CreditCardAddress2" />
+                <ScalarProperty Name="CreditCardAddress1" ColumnName="CreditCardAddress1" />
+                <ScalarProperty Name="CreditCardName" ColumnName="CreditCardName" />
+                <ScalarProperty Name="CreditCardVerificationValue" ColumnName="CreditCardVerificationValue" />
+                <ScalarProperty Name="CreditCardExpiration" ColumnName="CreditCardExpiration" />
+                <ScalarProperty Name="CreditCardNumber" ColumnName="CreditCardNumber" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="PatStoreDBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="WeatherLocaterId" ColumnName="WeatherLocaterId" />
+                <ScalarProperty Name="Image_3" ColumnName="Image_3" />
+                <ScalarProperty Name="Image_2" ColumnName="Image_2" />
+                <ScalarProperty Name="Image_1" ColumnName="Image_1" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RegionId" ColumnName="RegionId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegionInfoes">
+            <EntityTypeMapping TypeName="PatStoreDBModel.RegionInfo">
+              <MappingFragment StoreEntitySet="RegionInfo">
+                <ScalarProperty Name="RegionName" ColumnName="RegionName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PatStoreDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

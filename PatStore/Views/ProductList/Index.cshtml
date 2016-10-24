@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PatStore.Models.Product>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Product List</h2>
+<div class="jumbotron">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.ActionLink("Location", "Index", new { sortBy = "Location", sortDirection = ((Request.QueryString["sortDirection"] ?? "DESC") == "DESC") ? "ASC" : "DESC" })
+            </th>
+            <th>
+                @Html.ActionLink("Price", "Index", new { sortBy = "Price", sortDirection = ((Request.QueryString["sortDirection"] ?? "DESC") == "DESC" ) ? "ASC" : "DESC" } )
+            </th>
+            <th>
+                View
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.ActionLink("View", "Index", "Product", new { id = item.Id }, null)
+                </td>
+            </tr>
+        }
+    </table>
+</div>

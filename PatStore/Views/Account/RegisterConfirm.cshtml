@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "RegisterConfirm";
+}
+
+<h2>RegisterConfirm</h2>
+
+@if (ViewBag.Confirmed)
+{
+    <div class="bg-success">
+        <h2>Email address confirmed</h2>
+        @Html.ActionLink("Click here to log in", "Login", "Account")
+    </div>
+}
+else
+{
+    <div class="bg-danger">
+        <h2>We were unable to confirm your account</h2>
+        <p>Please check your email account</p>
+    </div>
+}

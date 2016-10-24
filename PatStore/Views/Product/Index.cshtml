@@ -1,0 +1,59 @@
+﻿@model PatStore.Models.Product
+@{
+    ViewBag.Title = Model.Location;
+}
+
+<div class="jumbotron">
+    <div class="row">
+        <h1>@Model.Location</h1>
+        <h3>@Model.Price</h3>
+        <p id="current"></p>       
+    </div>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" carousel">
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="@Model.Image_1" />
+            </div>
+            <div class="item">
+                <img src="@Model.Image_2" />
+            </div>
+            <div class="item">
+                <img src="@Model.Image_3" />
+            </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(m => m.Location)
+                @Html.HiddenFor(m => m.Price)
+                @Html.HiddenFor(m => m.RegionId)
+                <input type="submit" class="btn btn-primary" title="Add To Cart" value="Add to Cart" />
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var a = '@Model.WeatherLocaterId';
+            var url = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22' +
+                a + '%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys';
+            $.getJSON(url,
+                function (jd) {
+                    console.log(jd);
+                    $("#current").append("<p>" + jd.query.results.channel.item.condition.temp + "F" + "</p>");
+                });
+        });
+    </script>
+}

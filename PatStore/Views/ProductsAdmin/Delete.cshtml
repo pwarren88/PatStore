@@ -1,0 +1,88 @@
+﻿@model PatStore.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeatherLocaterId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeatherLocaterId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegionInfo.RegionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegionInfo.RegionName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

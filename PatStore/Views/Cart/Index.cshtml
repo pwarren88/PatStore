@@ -1,0 +1,68 @@
+﻿@model PatStore.Models.CartModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Shipping Details</h2>
+
+@using (Html.BeginForm())
+{
+
+@Html.ValidationSummary(false)
+
+    <form method="get">
+        <fieldset>
+            <legend>Customer Information</legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Phone)
+                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Address)
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.City)
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.State)
+                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Credit Card Information</legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreditCardName)
+                @Html.TextBoxFor(m => m.CreditCardName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreditCardNumber)
+                @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CreditCV)
+                @Html.TextBoxFor(m => m.CreditCV, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ExpirationDate)
+                @Html.TextBoxFor(m => m.ExpirationDate, new { @class = "form-control" })
+            </div>
+        </fieldset>
+        <input type="submit" title="Place Order" class="button-primary" />
+    </form>
+
+}

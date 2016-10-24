@@ -1,0 +1,82 @@
+﻿@model PatStore.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image_3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Image_3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeatherLocaterId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeatherLocaterId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegionInfo.RegionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegionInfo.RegionName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
