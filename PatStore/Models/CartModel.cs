@@ -8,13 +8,9 @@ namespace PatStore.Models
 {
     public class CartModel
     {
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string FirstName { get; set; }
-        [Required]
         public string LastName { get; set; }
-        [Required]
         [Phone]
         public string Phone { get; set; }
         [Required]
@@ -28,9 +24,9 @@ namespace PatStore.Models
         [Required]
         public string Zip { get; set; }
         [Required]
+        //[CreditCard]
         public string CreditCardNumber { get; set; }
         [Required]
-        [CreditCard]
         public DateTime CreditCardExpiration { get; set; }
         [Required]
         public int CreditCardVerificationValue { get; set; }

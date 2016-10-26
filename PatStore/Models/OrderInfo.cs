@@ -19,6 +19,7 @@ namespace PatStore.Models
         public int UserId { get; set; }
         public int PaymentId { get; set; }
         public decimal Total { get; set; }
+        public bool Checkedout { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual User User { get; set; }

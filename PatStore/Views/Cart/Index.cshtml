@@ -8,8 +8,6 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(false)
-
-    <form method="get">
         <fieldset>
             <legend>Product Information</legend>
             <div class="form-group">
@@ -59,7 +57,15 @@
         </fieldset>
 
         <fieldset>
-            <legend>Address</legend>
+            <legend>User Info</legend>
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Address1)
                 @Html.TextBoxFor(m => m.Address1, new { @class = "form-control" })
@@ -81,6 +87,5 @@
                 @Html.TextBoxFor(m => m.Zip, new { @class = "form-control" })
             </div>
         </fieldset>
-    </form>
     <input type="submit" title="Place Order" value="Place Order" class="button-primary" />
 }

@@ -37,7 +37,6 @@ namespace PatStore.Controllers
                     model.CreditCardCity = pay.CreditCardCity;
                     model.CreditCardState = pay.CreditCardState;
                     model.CreditCardPostal = pay.CreditCardPostal;
-
                     //model.Product = new Product
                     //{
                     //    Location = prod.Location
@@ -62,6 +61,11 @@ namespace PatStore.Controllers
                 {
                     using (PatStore.Models.PatStoreDBEntities entities = new PatStoreDBEntities())
                     {
+                        var user = entities.Users.First(x => x.Email == User.Identity.Name);
+                        var cart = user.OrderInfoes.First();
+                        cart.Checkedout = true;
+                        entities.SaveChanges();
+                        return RedirectToAction("Index", "Home");
                         //CartModel model = new CartModel();
                         //OrderInfo order = new OrderInfo();                       
                         //cart.ProdId = prod.Id;
@@ -82,7 +86,6 @@ namespace PatStore.Controllers
                         //pay.CreditCardPostal = model.CreditCardPostal;
                         //entities.OrderInfoes.Add(order);                        
                         //entities.PaymentInfoes.Add(model);
-                        entities.SaveChanges();
                     }
                 }
                 return RedirectToAction("Index", "Recepit");

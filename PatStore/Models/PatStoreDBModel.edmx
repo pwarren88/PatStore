@@ -14,6 +14,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="PaymentId" Type="int" Nullable="false" />
           <Property Name="Total" Type="smallmoney" Nullable="false" />
+          <Property Name="Checkedout" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
@@ -167,7 +168,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="OrderInfo" EntitySet="OrderInfoes" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="PaymentInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -262,6 +263,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="PaymentId" Type="Int32" Nullable="false" />
           <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Checkedout" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="PatStoreDBModel.fk_id_prod" FromRole="OrderInfo" ToRole="Product" />
           <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_id_user" FromRole="OrderInfo" ToRole="User" />
         </EntityType>
@@ -357,6 +359,7 @@
           <EntitySetMapping Name="OrderInfoes">
             <EntityTypeMapping TypeName="PatStoreDBModel.OrderInfo">
               <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="Checkedout" ColumnName="Checkedout" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

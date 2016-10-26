@@ -11,10 +11,10 @@
         <EntityTypeShape EntityType="PatStoreDBModel.User" Width="1.5" PointX="0.75" PointY="4.75" />
         <AssociationConnector Association="PatStoreDBModel.fk_payinfo_order" />
         <AssociationConnector Association="PatStoreDBModel.fk_region_product" />
-        <EntityTypeShape EntityType="PatStoreDBModel.OrderInfo" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="PatStoreDBModel.OrderInfo" Width="1.5" PointX="5.25" PointY="3.375" />
         <AssociationConnector Association="PatStoreDBModel.fk_id_prod" />
         <AssociationConnector Association="PatStoreDBModel.fk_id_user" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
