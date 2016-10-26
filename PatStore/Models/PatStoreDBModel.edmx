@@ -70,18 +70,6 @@
           <Property Name="State" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="ZipCode" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
-        <Association Name="fk_id_payment">
-          <End Role="PaymentInfo" Type="Self.PaymentInfo" Multiplicity="1" />
-          <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaymentInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderInfo">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_id_prod">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="OrderInfo" Type="Self.OrderInfo" Multiplicity="*" />
@@ -136,10 +124,6 @@
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RegionInfo" EntityType="Self.RegionInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="fk_id_payment" Association="Self.fk_id_payment">
-            <End Role="PaymentInfo" EntitySet="PaymentInfo" />
-            <End Role="OrderInfo" EntitySet="OrderInfo" />
-          </AssociationSet>
           <AssociationSet Name="fk_id_prod" Association="Self.fk_id_prod">
             <End Role="Product" EntitySet="Product" />
             <End Role="OrderInfo" EntitySet="OrderInfo" />
@@ -162,23 +146,10 @@
     <edmx:ConceptualModels>
       <Schema Namespace="PatStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PatStoreDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="OrderInfoes" EntityType="PatStoreDBModel.OrderInfo" />
           <EntitySet Name="PaymentInfoes" EntityType="PatStoreDBModel.PaymentInfo" />
           <EntitySet Name="Products" EntityType="PatStoreDBModel.Product" />
           <EntitySet Name="RegionInfoes" EntityType="PatStoreDBModel.RegionInfo" />
           <EntitySet Name="Users" EntityType="PatStoreDBModel.User" />
-          <AssociationSet Name="fk_id_payment" Association="PatStoreDBModel.fk_id_payment">
-            <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
-            <End Role="OrderInfo" EntitySet="OrderInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="fk_id_prod" Association="PatStoreDBModel.fk_id_prod">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="OrderInfo" EntitySet="OrderInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="fk_id_user" Association="PatStoreDBModel.fk_id_user">
-            <End Role="User" EntitySet="Users" />
-            <End Role="OrderInfo" EntitySet="OrderInfoes" />
-          </AssociationSet>
           <AssociationSet Name="fk_payinfo_order" Association="PatStoreDBModel.fk_payinfo_order">
             <End Role="User" EntitySet="Users" />
             <End Role="PaymentInfo" EntitySet="PaymentInfoes" />
@@ -187,20 +158,16 @@
             <End Role="RegionInfo" EntitySet="RegionInfoes" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="OrderInfoes" EntityType="PatStoreDBModel.OrderInfo" />
+          <AssociationSet Name="fk_id_prod" Association="PatStoreDBModel.fk_id_prod">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_id_user" Association="PatStoreDBModel.fk_id_user">
+            <End Role="User" EntitySet="Users" />
+            <End Role="OrderInfo" EntitySet="OrderInfoes" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="OrderInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProdId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="PaymentId" Type="Int32" Nullable="false" />
-          <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
-          <NavigationProperty Name="PaymentInfo" Relationship="PatStoreDBModel.fk_id_payment" FromRole="OrderInfo" ToRole="PaymentInfo" />
-          <NavigationProperty Name="Product" Relationship="PatStoreDBModel.fk_id_prod" FromRole="OrderInfo" ToRole="Product" />
-          <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_id_user" FromRole="OrderInfo" ToRole="User" />
-        </EntityType>
         <EntityType Name="PaymentInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -216,7 +183,6 @@
           <Property Name="CreditCardCity" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreditCardState" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="CreditCardPostal" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_payment" FromRole="PaymentInfo" ToRole="OrderInfo" />
           <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_payinfo_order" FromRole="PaymentInfo" ToRole="User" />
         </EntityType>
         <EntityType Name="Product">
@@ -232,8 +198,8 @@
           <Property Name="Image_2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Image_3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="WeatherLocaterId" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_prod" FromRole="Product" ToRole="OrderInfo" />
           <NavigationProperty Name="RegionInfo" Relationship="PatStoreDBModel.fk_region_product" FromRole="Product" ToRole="RegionInfo" />
+          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_prod" FromRole="Product" ToRole="OrderInfo" />
         </EntityType>
         <EntityType Name="RegionInfo">
           <Key>
@@ -260,45 +226,9 @@
           <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_user" FromRole="User" ToRole="OrderInfo" />
           <NavigationProperty Name="PaymentInfoes" Relationship="PatStoreDBModel.fk_payinfo_order" FromRole="User" ToRole="PaymentInfo" />
+          <NavigationProperty Name="OrderInfoes" Relationship="PatStoreDBModel.fk_id_user" FromRole="User" ToRole="OrderInfo" />
         </EntityType>
-        <Association Name="fk_id_payment">
-          <End Type="PatStoreDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="1" />
-          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PaymentInfo">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderInfo">
-              <PropertyRef Name="PaymentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_id_prod">
-          <End Type="PatStoreDBModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderInfo">
-              <PropertyRef Name="ProdId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_id_user">
-          <End Type="PatStoreDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="OrderInfo">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="fk_payinfo_order">
           <End Type="PatStoreDBModel.User" Role="User" Multiplicity="1" />
           <End Type="PatStoreDBModel.PaymentInfo" Role="PaymentInfo" Multiplicity="*" />
@@ -323,23 +253,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OrderInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProdId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentId" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <NavigationProperty Name="Product" Relationship="PatStoreDBModel.fk_id_prod" FromRole="OrderInfo" ToRole="Product" />
+          <NavigationProperty Name="User" Relationship="PatStoreDBModel.fk_id_user" FromRole="OrderInfo" ToRole="User" />
+        </EntityType>
+        <Association Name="fk_id_prod">
+          <End Type="PatStoreDBModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="ProdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_id_user">
+          <End Type="PatStoreDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="PatStoreDBModel.OrderInfo" Role="OrderInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrderInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="PatStoreDBModelStoreContainer" CdmEntityContainer="PatStoreDBEntities">
-          <EntitySetMapping Name="OrderInfoes">
-            <EntityTypeMapping TypeName="PatStoreDBModel.OrderInfo">
-              <MappingFragment StoreEntitySet="OrderInfo">
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PaymentInfoes">
             <EntityTypeMapping TypeName="PatStoreDBModel.PaymentInfo">
               <MappingFragment StoreEntitySet="PaymentInfo">
@@ -395,6 +350,17 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderInfoes">
+            <EntityTypeMapping TypeName="PatStoreDBModel.OrderInfo">
+              <MappingFragment StoreEntitySet="OrderInfo">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProdId" ColumnName="ProdId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

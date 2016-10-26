@@ -20,24 +20,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Products", "Index", "ProductList")</li>
-                    <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.Partial("_Login")</li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li>
-                            @Html.ActionLink("User Adresses","Index","UserAdresses")
-                        </li>
-                    }
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li>
-                            @Html.ActionLink("Product Administration", "Index", "Product");
-                        </li>
+                        <li>@Html.ActionLink("Product Administration", "Index", "ProductsAdmin");</li>
+                        <li>@Html.ActionLink("Region Admin", "Index", "RegionAdmin");</li>
                     }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Products", "Index", "ProductList")</li>
+                        <li>@Html.ActionLink("Cart", "Index", "Cart")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                    }                   
+                    <li>@Html.Partial("_Login")</li>
                 </ul>
             </div>
         </div>

@@ -7,7 +7,6 @@
     PRIMARY KEY CLUSTERED ([Id] ASC),
 	CONSTRAINT fk_id_prod FOREIGN KEY (ProdId) REFERENCES [Product](Id),
 	CONSTRAINT fk_id_user FOREIGN KEY (UserId) REFERENCES [User](Id), 
-	CONSTRAINT fk_id_payment FOREIGN KEY (PaymentId) REFERENCES [PaymentInfo](Id),
 );
 
 

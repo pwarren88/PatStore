@@ -59,5 +59,6 @@ namespace PatStore.Controllers
             }
             return View(model);
         }
+        List<Product> products = new List<Product>();
     }
 }

@@ -74,6 +74,60 @@
         @Html.ValidationMessageFor(m => m.Zip)
     </div>
 
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardNumber)
+        @Html.TextBoxFor(m => m.CreditCardNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardExpiration)
+        @Html.TextBoxFor(m => m.CreditCardExpiration, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardExpiration)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardVerificationValue)
+        @Html.TextBoxFor(m => m.CreditCardVerificationValue, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardVerificationValue)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardName)
+        @Html.TextBoxFor(m => m.CreditCardName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardAddress1)
+        @Html.TextBoxFor(m => m.CreditCardAddress1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardAddress1)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardAddress2)
+        @Html.TextBoxFor(m => m.CreditCardAddress2, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardAddress2)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardCity)
+        @Html.TextBoxFor(m => m.CreditCardCity, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardCity)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardState)
+        @Html.TextBoxFor(m => m.CreditCardState, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardState)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CreditCardPostal)
+        @Html.TextBoxFor(m => m.CreditCardPostal, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CreditCardPostal)
+    </div>
+
 
 <input type="submit" value="Create Account" class="btn btn-primary" />   
 }

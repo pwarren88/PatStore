@@ -3,11 +3,12 @@
     ViewBag.Title = Model.Location;
 }
 
-<div class="jumbotron">
+<div class="container">
     <div class="row">
         <h1>@Model.Location</h1>
-        <h3>@Model.Price</h3>
-        <p id="current"></p>       
+        <h3>$@Model.Price</h3>
+        <p>@Model.Description</p>
+        <p id="current"></p>
     </div>
     <div id="myCarousel" class="carousel slide" data-ride="carousel" carousel">
         <div class="carousel-inner" role="listbox">
@@ -30,17 +31,25 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <div class="row">
-        <div class="col-sm-4">
-            @using (Html.BeginForm())
-            {
-                @Html.HiddenFor(m => m.Location)
-                @Html.HiddenFor(m => m.Price)
-                @Html.HiddenFor(m => m.RegionId)
-                <input type="submit" class="btn btn-primary" title="Add To Cart" value="Add to Cart" />
-            }
+
+    @if (User.IsInRole("Administrator"))
+    {
+
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-sm-4">
+                @using (Html.BeginForm())
+                {
+                    @Html.HiddenFor(m => m.Location)
+                    @Html.HiddenFor(m => m.Price)
+                    @Html.HiddenFor(m => m.RegionId)
+                    <input type="submit" class="btn btn-primary" title="Add To Cart" value="Add to Cart" />
+                }
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 @section Scripts{

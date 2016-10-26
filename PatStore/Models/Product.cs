@@ -30,8 +30,8 @@ namespace PatStore.Models
         public string Image_3 { get; set; }
         public string WeatherLocaterId { get; set; }
     
+        public virtual RegionInfo RegionInfo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderInfo> OrderInfoes { get; set; }
-        public virtual RegionInfo RegionInfo { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Typesafe.Mailgun;
 using WebMatrix.WebData;
 
 namespace PatStore.Controllers
@@ -26,7 +27,7 @@ namespace PatStore.Controllers
         [HttpPost]
         [AllowAnonymous]
         public async Task<ActionResult> Registration(RegistrationModel model)
-        {
+            {
             if (ModelState.IsValid)
             {
                 //TODO: Let's create an account
@@ -39,9 +40,8 @@ namespace PatStore.Controllers
                     //TODO: Setup email confirmation tokens
                     string token = WebMatrix.WebData.WebSecurity.CreateUserAndAccount(model.Email, model.Password,
                         new
-                        {
-                            Email = model.Email,
-                            Password = model.Password,
+                        {                           
+                            Password = "Unused",
                             FirstName = model.FirstName,
                             MiddleName = model.MiddleName,
                             LastName = model.LastName,
@@ -50,23 +50,54 @@ namespace PatStore.Controllers
                             Address2 = model.Address2,
                             City = model.City,
                             State = model.State,
-                            ZipCode = model.Zip
+                            ZipCode = model.Zip,                           
                         }, true);
 
-                    string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];
-                    SendGrid.SendGridAPIClient client = new SendGrid.SendGridAPIClient(apiKey);
+                    string apiKey = ConfigurationManager.AppSettings["SendGrid.Key"];                    
+                    string subject = "Complete your PatStore Registration";                  
+                    string emailContent = string.Format("<html><body><a href=\"{0}\">Complete your registration</a></body></html>", 
+                        Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/RegisterConfirm/" + HttpUtility.UrlEncode(token) + "?email=" + 
+                        HttpUtility.UrlEncode(model.Email));
+                    var client = new MailgunClient("sandbox2dc3ec1959274850aac287b7810b4055.mailgun.org", "key-234c438fb94e6d6d2b27de2f473b7193", 3);
 
-                    SendGrid.Helpers.Mail.Email from = new SendGrid.Helpers.Mail.Email("admin@patstore.com");
-                    string subject = "Complete your PatStore Registration";
-                    SendGrid.Helpers.Mail.Email to = new SendGrid.Helpers.Mail.Email(model.Email);
+                    var from = new System.Net.Mail.MailAddress("postmaster@sandbox2dc3ec1959274850aac287b7810b4055.mailgun.org", "MailGun Sandbox");
 
-                    string emailContent = string.Format("<html><body><a href=\"{0}\">Complete your registration</a></body></html>", Request.Url.GetLeftPart(UriPartial.Authority) + "/Account/RegisterConfirm/" + HttpUtility.UrlEncode(token) + "?email=" + HttpUtility.UrlEncode(model.Email));
-                    SendGrid.Helpers.Mail.Content content = new SendGrid.Helpers.Mail.Content("text/html", emailContent);
-                    SendGrid.Helpers.Mail.Mail mail = new SendGrid.Helpers.Mail.Mail(from, subject, to, content);
-                    SendGrid.CSharp.HTTP.Client.Response r = await client.client.mail.send.post(requestbody: mail.Get());
-                    string sendGridResponse = await r.Body.ReadAsStringAsync();
+                    string sb = ConfigurationManager.AppSettings["MailGun.IsSandbox"];
+                    bool isSandbox = bool.Parse(sb);
+                    System.Net.Mail.MailAddress to = null;
+
+                    if (isSandbox)
+                    {
+                        to = new System.Net.Mail.MailAddress("patrick.warren1988@gmail.com", model.FirstName + " " + model.LastName);
+                    }
+                    else
+                    {
+                        to = new System.Net.Mail.MailAddress(model.Email, model.FirstName + " " + model.LastName);
+                    }
+                    var message = new System.Net.Mail.MailMessage(from, to)
+                    {
+                        Subject = subject,
+                        Body = emailContent
+                    };
+                    client.SendMail(message);
+                    using (PatStore.Models.PatStoreDBEntities entities = new PatStoreDBEntities())
+                    {
+                        var user = entities.Users.Single(x => x.Email == model.Email);
+                        PaymentInfo payment = new PaymentInfo();
+                        payment.CreditCardNumber = model.CreditCardNumber;
+                        payment.CreditCardExpiration = DateTime.Now;// model.CreditCardExpiration;
+                        payment.CreditCardVerificationValue = model.CreditCardVerificationValue;
+                        payment.CreditCardName = model.CreditCardName;
+                        payment.CreditCardAddress1 = model.CreditCardAddress1;
+                        payment.CreditCardAddress2 = model.CreditCardAddress2;
+                        payment.CreditCardCity = model.CreditCardCity;
+                        payment.CreditCardState = model.CreditCardState;
+                        payment.CreditCardPostal = model.CreditCardPostal;
+                        user.PaymentInfoes.Add(payment);
+                        entities.SaveChanges();
+                    }
                     return RedirectToAction("RegisterComplete", "Account");
-                }
+                }                
             }
             return View(model);
         }

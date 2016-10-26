@@ -26,6 +26,8 @@ namespace PatStore.Models
         [Required]
         public string State { get; set; }
         [Required]
+        public string Zip { get; set; }
+        [Required]
         public string CreditCardNumber { get; set; }
         [Required]
         [CreditCard]
@@ -34,8 +36,6 @@ namespace PatStore.Models
         public int CreditCardVerificationValue { get; set; }
         [Required]
         public string CreditCardName { get; set; }
-        [Required]
-        public string CreditCardAddress { get; set; }
         [Required]
         public string CreditCardAddress1 { get; set; }
         [Required]
@@ -46,5 +46,12 @@ namespace PatStore.Models
         public string CreditCardState { get; set; }
         [Required]
         public string CreditCardPostal { get; set; }
+
+        public int ProdId { get; set; }
+        public int PayId { get; set; }
+        public int UserId { get; set; }
+        public decimal Total { get; set; }
+
+        public string Location { get; set; }
     }
 }

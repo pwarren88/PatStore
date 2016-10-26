@@ -14,12 +14,6 @@ namespace PatStore.Models
     
     public partial class PaymentInfo
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PaymentInfo()
-        {
-            this.OrderInfoes = new HashSet<OrderInfo>();
-        }
-    
         public int Id { get; set; }
         public int UserId { get; set; }
         public string CreditCardNumber { get; set; }
@@ -32,8 +26,6 @@ namespace PatStore.Models
         public string CreditCardState { get; set; }
         public string CreditCardPostal { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderInfo> OrderInfoes { get; set; }
         public virtual User User { get; set; }
     }
 }

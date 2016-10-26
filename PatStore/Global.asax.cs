@@ -21,8 +21,8 @@ namespace PatStore
             WebMatrix.WebData.WebSecurity.InitializeDatabaseConnection("PatStore", "User", "Id", "Email", true);
 
             //Creates admin role if it does not exist
-            if (Roles.RoleExists("Administrator"))
-                Roles.CreateRole("Administrator");
+            //if (Roles.RoleExists("Administrator"))
+                //Roles.CreateRole("Administrator");
         }
     }
 }

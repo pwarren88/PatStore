@@ -5,16 +5,15 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d9a6c35f4ae84d5ab47d3cf4ae061a6f" Name="Diagram1">
-        <EntityTypeShape EntityType="PatStoreDBModel.OrderInfo" Width="1.5" PointX="5.25" PointY="7" />
         <EntityTypeShape EntityType="PatStoreDBModel.PaymentInfo" Width="1.5" PointX="3" PointY="8.25" />
         <EntityTypeShape EntityType="PatStoreDBModel.Product" Width="1.5" PointX="3" PointY="0.75" />
         <EntityTypeShape EntityType="PatStoreDBModel.RegionInfo" Width="1.5" PointX="0.75" PointY="1.625" />
         <EntityTypeShape EntityType="PatStoreDBModel.User" Width="1.5" PointX="0.75" PointY="4.75" />
-        <AssociationConnector Association="PatStoreDBModel.fk_id_payment" />
-        <AssociationConnector Association="PatStoreDBModel.fk_id_prod" />
-        <AssociationConnector Association="PatStoreDBModel.fk_id_user" />
         <AssociationConnector Association="PatStoreDBModel.fk_payinfo_order" />
         <AssociationConnector Association="PatStoreDBModel.fk_region_product" />
+        <EntityTypeShape EntityType="PatStoreDBModel.OrderInfo" Width="1.5" PointX="5.25" PointY="3.5" />
+        <AssociationConnector Association="PatStoreDBModel.fk_id_prod" />
+        <AssociationConnector Association="PatStoreDBModel.fk_id_user" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

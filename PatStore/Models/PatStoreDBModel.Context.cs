@@ -25,10 +25,10 @@ namespace PatStore.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<OrderInfo> OrderInfoes { get; set; }
         public virtual DbSet<PaymentInfo> PaymentInfoes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<RegionInfo> RegionInfoes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<OrderInfo> OrderInfoes { get; set; }
     }
 }

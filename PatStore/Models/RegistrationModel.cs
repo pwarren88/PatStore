@@ -32,5 +32,24 @@ namespace PatStore.Models
         public string State { get; set; }
         [Required]
         public string Zip { get; set; }
+        [Required]
+        public string CreditCardNumber { get; set; }
+        [Required]
+        public DateTime CreditCardExpiration { get; set; }
+        [Required]
+        public int CreditCardVerificationValue { get; set; }
+        [Required]
+        public string CreditCardName { get; set; }
+        [Required]
+        public string CreditCardAddress1 { get; set; }
+        [Required]
+        public string CreditCardAddress2 { get; set; }
+        [Required]
+        public string CreditCardCity { get; set; }
+        [Required]
+        public string CreditCardState { get; set; }
+        [Required]
+        public string CreditCardPostal { get; set; }
+
     }
 }

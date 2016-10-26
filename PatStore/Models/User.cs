@@ -17,8 +17,8 @@ namespace PatStore.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.OrderInfoes = new HashSet<OrderInfo>();
             this.PaymentInfoes = new HashSet<PaymentInfo>();
+            this.OrderInfoes = new HashSet<OrderInfo>();
         }
     
         public int Id { get; set; }
@@ -36,8 +36,8 @@ namespace PatStore.Models
         public string ZipCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderInfo> OrderInfoes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PaymentInfo> PaymentInfoes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrderInfo> OrderInfoes { get; set; }
     }
 }
