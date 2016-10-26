@@ -23,11 +23,13 @@ namespace PatStore.Controllers
                 model.Id = product.Id;
                 model.Location = product.Location;
                 model.Price = product.Price;
+                model.Description = product.Description;
                 model.RegionId = product.RegionId;
                 model.Image_1 = product.Image_1;
                 model.Image_2 = product.Image_2;
                 model.Image_3 = product.Image_3;
                 model.WeatherLocaterId = product.WeatherLocaterId;
+                //comment
                 return View(model);
             }
         }
@@ -37,16 +39,19 @@ namespace PatStore.Controllers
         {
             //TO DO: Add Product in Database!
             using (PatStore.Models.PatStoreDBEntities entities = new PatStoreDBEntities())
-            {                                
-                //Create Line item
-                OrderInfo detail = new OrderInfo();
-                detail.ProdId = model.Id;
+            {
+                //Add order to database and redirect to review page
                 var user = entities.Users.Single(x => x.Email == User.Identity.Name);
+                OrderInfo detail = new OrderInfo();
+                detail.Id = 1;
+                detail.ProdId = model.Id;
+                detail.UserId = user.Id;
                 detail.Total = model.Price;
+                detail.PaymentId = 1;
                 entities.OrderInfoes.Add(detail);
-                entities.SaveChanges();                
+                entities.SaveChanges();              
             }
-            return RedirectToAction("Index", "Checkout");
+            return RedirectToAction("Index", "Cart");
         }
     }
 }
